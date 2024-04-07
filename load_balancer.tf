@@ -1,5 +1,5 @@
 resource "aws_lb" "web_lb" {
-  name               = "web-lb"
+  name               = "web-lb1"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_sg.id]
@@ -8,7 +8,7 @@ resource "aws_lb" "web_lb" {
   depends_on = [ aws_security_group.lb_sg , aws_subnet.public  ]
 }
 resource "aws_lb_target_group" "test" {
-  name     = "testTargetgroup1"
+  name     = "testTargetgroup2"
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.mainVPC.id
@@ -16,10 +16,10 @@ resource "aws_lb_target_group" "test" {
 }
 resource "aws_lb_listener" "weblb" {
   load_balancer_arn = aws_lb.web_lb.arn
-  port              = "443"
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate.self-signed.arn
+  port              = "80"
+  protocol          = "HTTP"
+  #ssl_policy        = "ELBSecurityPolicy-2016-08"
+  #certificate_arn   = aws_acm_certificate.self-signed.arn
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.test.arn
