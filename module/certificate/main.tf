@@ -1,10 +1,4 @@
-# provider "aws" {
-#   region = "us-east-1"
-# }
-
 resource "aws_acm_certificate" "self-signed" {
-  # provider = aws.us-east-1
-
   domain_name               = "test.example.com"
   subject_alternative_names = ["test.example.com"]
   validation_method         = "DNS"

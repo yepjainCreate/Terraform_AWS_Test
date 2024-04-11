@@ -1,7 +1,7 @@
 resource "aws_launch_configuration" "web_lc" {
   image_id        = var.ami_id
   instance_type   = "t2.micro"  # Change to desired instance type
-  security_groups = [aws_security_group.web_sg.id]
+  security_groups = [var.security_group_websg_id]
  
   # Add block device mapping for root and secondary volumes
   root_block_device {
@@ -27,32 +27,30 @@ resource "aws_launch_configuration" "web_lc" {
               # Run Ansible playbook
               ansible-playbook ${var.ansible_playbook_path}
               EOF
-    depends_on = [ aws_security_group.web_sg ]
 }
 
 resource "aws_autoscaling_group" "web_asg" {
   launch_configuration = aws_launch_configuration.web_lc.name
-  vpc_zone_identifier  = [aws_subnet.private.id]
+  vpc_zone_identifier  = [var.privateSubnetID]
   min_size             = 1
   max_size             = 3  # Change as needed
   desired_capacity     = 2  # Change as needed
- depends_on = [ aws_launch_configuration.web_lc , aws_subnet.private ]
 }
 
 resource "aws_autoscaling_policy" "scale_out" {
-  name                   = "scale-out"
-  scaling_adjustment     = 1
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300  # 5 minutes cooldown period
+  name                   = var.autoscale_policy_name_ScaleOut
+  scaling_adjustment     = var.autoscale_adjustment_ScaleOut
+  adjustment_type        = var.autoscale_adjustment_type
+  cooldown               = var.autoscale_cooldown_ScaleOut # 5 minutes cooldown period
   autoscaling_group_name = aws_autoscaling_group.web_asg.name
   depends_on = [ aws_autoscaling_group.web_asg ]
 }
 
 resource "aws_autoscaling_policy" "scale_in" {
-  name                   = "scale-in"
-  scaling_adjustment     = -1
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300  # 5 minutes cooldown period
+  name                   = var.autoscale_policy_name_Scalein
+  scaling_adjustment     = var.autoscale_adjustment_Scalein
+  adjustment_type        = var.autoscale_adjustment_type
+  cooldown               = var.autoscale_cooldown_Scalein  # 5 minutes cooldown period
   autoscaling_group_name = aws_autoscaling_group.web_asg.name
   depends_on = [ aws_autoscaling_group.web_asg ]
 }

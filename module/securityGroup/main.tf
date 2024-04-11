@@ -1,5 +1,5 @@
 resource "aws_security_group" "web_sg" {
-  vpc_id = aws_vpc.mainVPC.id
+  vpc_id = var.vpc_id
 
   # Allow HTTP and HTTPS inbound from anywhere
   ingress {
@@ -24,11 +24,10 @@ resource "aws_security_group" "web_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  depends_on = [ aws_vpc.mainVPC ]
 }
 
 resource "aws_security_group" "lb_sg" {
-  vpc_id = aws_vpc.mainVPC.id
+  vpc_id = var.vpc_id
 
   # Allow HTTP and HTTPS inbound from anywhere
   ingress {
@@ -52,5 +51,4 @@ resource "aws_security_group" "lb_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  depends_on = [ aws_vpc.mainVPC ]
 }

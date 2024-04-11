@@ -1,18 +1,16 @@
 resource "aws_lb" "web_lb" {
-  name               = "web-lb1"
+  name               = var.loadbalancer_name
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = [aws_subnet.public.id, aws_subnet.private.id]
-  enable_deletion_protection = false    
-  depends_on = [ aws_security_group.lb_sg , aws_subnet.public  ]
+  security_groups    = [var.lb_security_groups_id]
+  subnets            = [var.public_subnet_id, var.private_subnet_id]
+  enable_deletion_protection = false
 }
 resource "aws_lb_target_group" "test" {
   name     = "testTargetgroup2"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = aws_vpc.mainVPC.id
-  depends_on = [ aws_vpc.mainVPC ]
+  vpc_id   = var.vpc_id
 }
 resource "aws_lb_listener" "weblb" {
   load_balancer_arn = aws_lb.web_lb.arn
@@ -24,7 +22,7 @@ resource "aws_lb_listener" "weblb" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.test.arn
   }
-  depends_on = [ aws_acm_certificate.self-signed , aws_lb_target_group.test ]
+  depends_on = [ aws_lb_target_group.test ]
 
 }
 
