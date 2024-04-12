@@ -40,28 +40,29 @@ Before you begin, ensure you have met the following requirements:
 terraform destroy
 
 #  Terraform Modules
-`networking_Module` : Sets up the VPC, public and private subnets.
-`sg_Module`: Configures security groups.
-`certificate_Module`: Manages SSL/TLS certificates.
-`loadBalancer_Module`: Creates an Application Load Balancer.
-`Route53_Module`: Configures Route 53 DNS records.
-`cloudwatch_Module`: Sets up CloudWatch alarms for monitoring.
-`autoscaling_Module`: Configures Auto Scaling policies.
+
+- `networking_Module` : Sets up the VPC, public and private subnets.
+- `sg_Module`: Configures security groups.
+- `certificate_Module`: Manages SSL/TLS certificates.
+- `loadBalancer_Module`: Creates an Application Load Balancer.
+- `Route53_Module`: Configures Route 53 DNS records.
+- `cloudwatch_Module`: Sets up CloudWatch alarms for monitoring.
+- `autoscaling_Module`: Configures Auto Scaling policies.
 
 # Variables
-`access_key`: AWS access key.
-`secret_key`: AWS secret key.
-`region`: AWS region to deploy the infrastructure (default: us-east-1).
-`vpc_cidr_block`: CIDR block for the VPC (default: 10.0.0.0/16).
-`public_subnet_cidr_block`: CIDR block for the public subnet (default: 10.0.1.0/24).
-`private_subnet_cidr_block`: CIDR block for the private subnet (default: 10.0.2.0/24)
-`loadbalancer_name`: Name for the Application Load Balancer. (default: web-lb1)
-`alarm_name`: Name for the CloudWatch alarm. (default:web-app-alarm)
-`evaluation_periods`: Number of evaluation Period for Autoscaling (default: 2).
-`metric_name`:  Metric Name for autoscaling group(default: HealthyHostCount).
-`namespace`: NameSpace name for autoscaling group (default: AWS/ApplicationELB)
-`period`: Cool Down Period for Scaling Policy. (default: 300)
-`alarm_description`: Alarm Description. (default:Alarm when there are not enough healthy hosts)
+- `access_key`: AWS access key.
+- `secret_key`: AWS secret key.
+- `region`: AWS region to deploy the infrastructure (default: us-east-1).
+- `vpc_cidr_block`: CIDR block for the VPC (default: 10.0.0.0/16).
+- `public_subnet_cidr_block`: CIDR block for the public subnet (default: 10.0.1.0/24).
+- `private_subnet_cidr_block`: CIDR block for the private subnet (default: 10.0.2.0/24)
+- `loadbalancer_name`: Name for the Application Load Balancer. (default: web-lb1)
+- `alarm_name`: Name for the CloudWatch alarm. (default:web-app-alarm)
+- `evaluation_periods`: Number of evaluation Period for Autoscaling (default: 2).
+- `metric_name`:  Metric Name for autoscaling group(default: HealthyHostCount).
+- `namespace`: NameSpace name for autoscaling group (default: AWS/ApplicationELB)
+- `period`: Cool Down Period for Scaling Policy. (default: 300)
+- `alarm_description`: Alarm Description. (default:Alarm when there are not enough healthy hosts)
 
 There are other Variables as well, please check variables.tf for there Variables Description and Default value.
 # Outputs
