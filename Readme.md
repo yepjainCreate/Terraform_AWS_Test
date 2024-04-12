@@ -7,12 +7,9 @@ Brief description of your project.
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Usage](#usage)
 - [Modules](#modules)
 - [Variables](#variables)
 - [Outputs](#outputs)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 # AWS Infrastructure Deployment
